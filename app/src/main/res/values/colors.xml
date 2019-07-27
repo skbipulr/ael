@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#336B87</color>
     <color name="colorAccent">#336B87</color>
     <color name="white">#FFFFFF</color>
+    <color name="grayWhite">#F1F1F1</color>
 
 
     <!-- dots inactive colors -->
