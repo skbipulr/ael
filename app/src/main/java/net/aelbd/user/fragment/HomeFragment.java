@@ -157,6 +157,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         restaurantList.add(new Restaurant("Cloud Bistro", "Rowshan Tower, 152/2A-2 (1st Floor, Panthapath Road, Dhaka 1205)", 23.751409, 90.386371));
         restaurantList.add(new Restaurant("Santoor Restaurant", "House no. 2, Road No 32, Mirpur Rd, Dhaka 1209", 23.752277, 90.377506));
         restaurantList.add(new Restaurant("Dhanshiri Plus Restaurant", "Barek Mension, Panthapath, 58, 11/A Free School St, Dhaka 1209", 23.750820, 90.389166));
+        restaurantList.add(new Restaurant("Dolma Restaurant","102 Kazi Nazrul Islam Ave, Dhaka 1215",23.753178, 90.392365));
+        restaurantList.add(new Restaurant("Bangla Restaurant","Station Road, Dhaka 1215",23.757499, 90.393694));
+
     }
 
     private void initializeMap() {
