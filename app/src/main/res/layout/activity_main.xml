@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
-
-
-
-    <FrameLayout
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/frameL">
+        android:layout_height="match_parent"
+        tools:context=".activity.MainActivity">
 
-    </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/frameL">
+
+        </FrameLayout>
 
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:labelVisibilityMode="labeled"
-        android:background="@color/grayWhite"
-        app:menu="@menu/bottom_nav_menu" />
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:labelVisibilityMode="labeled"
+            android:background="@color/grayWhite"
+            app:menu="@menu/bottom_nav_menu" />
 
-</LinearLayout>
+    </LinearLayout>
+</layout>
