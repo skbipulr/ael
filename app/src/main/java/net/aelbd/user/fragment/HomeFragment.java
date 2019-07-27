@@ -225,13 +225,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void setRestaurantMarker() {
+        for (int i = 0;i<restaurantList.size();i++){
+            Restaurant restaurant = restaurantList.get(i);
+            setMarker(new LatLng(restaurant.getLatitude(),restaurant.getLongitude()),String.valueOf(i),String.valueOf(restaurant.getName().charAt(0)));
+        }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0;i<restaurantList.size();i++){
-                    Restaurant restaurant = restaurantList.get(i);
-                    setMarker(new LatLng(restaurant.getLatitude(),restaurant.getLongitude()),String.valueOf(i),String.valueOf(restaurant.getName().charAt(0)));
-                }
+
                 binding.swipeRefreshL.setRefreshing(false);
                 binding.swipeRefreshL.setEnabled(false);
             }
