@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -33,12 +34,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import net.aelbd.user.R;
+import net.aelbd.user.bottomSheet.RestaurantDetailsBottomSheet;
 import net.aelbd.user.databinding.FragmentHomeBinding;
+import net.aelbd.user.model.Restaurant;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
@@ -46,16 +53,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-    private static final float DEFAULT_ZOOM = 16f;
+    private static final float DEFAULT_ZOOM = 15f;
 
-
-    private Location currentLocation;
     private Boolean locationPermissionsGranted = false;
 
     private GoogleMap map;
     private FragmentManager fragmentManager;
     private GoogleMapOptions googleMapOptions;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private List<Restaurant> restaurantList;
 
     public HomeFragment() {
     }
@@ -70,6 +76,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         getLocationPermission();
 
+        getRestaurantList();
+
 
         binding.myLocationFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +91,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
     private void initialize() {
+        restaurantList = new ArrayList<>();
         fragmentManager = getActivity().getSupportFragmentManager();
     }
 
@@ -143,6 +152,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     -------------------------------------------------------------*/
 
 
+    private void getRestaurantList() {
+        //API call will be here.
+        restaurantList.add(new Restaurant("Cloud Bistro", "Rowshan Tower, 152/2A-2 (1st Floor, Panthapath Road, Dhaka 1205)", 23.751409, 90.386371));
+        restaurantList.add(new Restaurant("Santoor Restaurant", "House no. 2, Road No 32, Mirpur Rd, Dhaka 1209", 23.752277, 90.377506));
+        restaurantList.add(new Restaurant("Dhanshiri Plus Restaurant", "Barek Mension, Panthapath, 58, 11/A Free School St, Dhaka 1209", 23.750820, 90.389166));
+    }
+
     private void initializeMap() {
 
         googleMapOptions = new GoogleMapOptions();
@@ -167,9 +183,38 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
             getDeviceLocation();
 
+            setRestaurantMarker();
+
             map.setMyLocationEnabled(true);
             map.getUiSettings().setMapToolbarEnabled(false);
             map.getUiSettings().setMyLocationButtonEnabled(false);
+        }
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                openBottomSheet(marker.getSnippet());
+                return true;
+            }
+        });
+    }
+
+    private void openBottomSheet(String position) {
+        if (!position.equals(null)) {
+            Bundle bundle = new Bundle();
+            bundle.putString("name", restaurantList.get(Integer.parseInt(position)).getName());
+            bundle.putString("address", restaurantList.get(Integer.parseInt(position)).getAddress());
+            RestaurantDetailsBottomSheet sendRequestBottomSheet = new RestaurantDetailsBottomSheet();
+            sendRequestBottomSheet.setArguments(bundle);
+            sendRequestBottomSheet.show(((FragmentActivity) getContext()).getSupportFragmentManager(), "RestaurantDetailsBottomSheet");
+        }
+
+    }
+
+    private void setRestaurantMarker() {
+        for (int i = 0;i<restaurantList.size();i++){
+            Restaurant restaurant = restaurantList.get(i);
+            setMarker(new LatLng(restaurant.getLatitude(),restaurant.getLongitude()),String.valueOf(i),String.valueOf(restaurant.getName().charAt(0)));
         }
     }
 
@@ -188,7 +233,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             Location currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
-                            setMarker(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),"","N");
                         } else {
                             Toast.makeText(getActivity(), "Unable to access to location", Toast.LENGTH_SHORT).show();
                         }
@@ -205,7 +249,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-    private void setMarker(LatLng latLng, String position,String name) {
+    private void setMarker(LatLng latLng, String position, String name) {
         map.addMarker(new MarkerOptions().position(latLng).snippet(position).icon(BitmapDescriptorFactory
                 .fromBitmap(createCustomMarker(name))));
 
