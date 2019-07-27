@@ -1,10 +1,14 @@
 package net.aelbd.user.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +29,11 @@ import net.aelbd.user.utill.SharedPref;
 
 public class LauncherActivity extends AppCompatActivity {
 
+
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+
     private ViewPager viewPager;
     private LinearLayout dotsLayout;
     private PrefManager prefManager;
@@ -44,6 +53,8 @@ public class LauncherActivity extends AppCompatActivity {
 
 
         init();
+
+        getLocationPermission();
 
 
         if (!prefManager.isFirstTimeLaunch()) {
@@ -99,6 +110,31 @@ public class LauncherActivity extends AppCompatActivity {
         prefManager = new PrefManager(this);
     }
 
+
+    private void getLocationPermission() {
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                        COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            permissions,
+                            LOCATION_PERMISSION_REQUEST_CODE);
+                }
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        permissions,
+                        LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
 
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 

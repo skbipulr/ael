@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,6 +74,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
 
+        binding.swipeRefreshL.setRefreshing(true);
         initialize();
 
         getLocationPermission();
@@ -83,6 +86,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 getDeviceLocation();
+            }
+        });
+
+        binding.swipeRefreshL.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.swipeRefreshL.setRefreshing(false);
             }
         });
 
@@ -215,10 +225,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void setRestaurantMarker() {
-        for (int i = 0;i<restaurantList.size();i++){
-            Restaurant restaurant = restaurantList.get(i);
-            setMarker(new LatLng(restaurant.getLatitude(),restaurant.getLongitude()),String.valueOf(i),String.valueOf(restaurant.getName().charAt(0)));
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0;i<restaurantList.size();i++){
+                    Restaurant restaurant = restaurantList.get(i);
+                    setMarker(new LatLng(restaurant.getLatitude(),restaurant.getLongitude()),String.valueOf(i),String.valueOf(restaurant.getName().charAt(0)));
+                }
+                binding.swipeRefreshL.setRefreshing(false);
+            }
+        },2000);
     }
 
 
