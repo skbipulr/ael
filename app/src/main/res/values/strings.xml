@@ -12,11 +12,14 @@
     <string name="company_large_hint">Advanced Equipment Limited is a big food service company. So choose your foods and be cool in your daily life.</string>
     <string name="fast_delivery_hint">Fast Delivery</string>
     <string name="delivery_large_hint">We are so fast in delivery. We will deliver your foods with in 30 minutes to 1 hour</string>
-    <string name="about_us">About Us</string>
+    <string name="about_us">Contact Us</string>
     <string name="payment">Payment</string>
     <string name="orders_history">Orders</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="map_api_key">AIzaSyCoNGSLAEeAidl9uUKSwlP465m22b0K9ks</string>
+    <string name="company_address">AEL head office - Hassan Plaza (5th Floor)  53 Karwan Bazar C/A  Tejgaon, Dhaka – 1215</string>
+    <string name="call_us">Call Us</string>
+    <string name="email_us">Email Us</string>
 </resources>
