@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private int currentPage = 0;
+    private boolean isForOrder = false;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -65,8 +66,17 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        currentPage = 0;
-        replaceFragment(new HomeFragment());
+        if (getIntent().getExtras()!=null){
+            isForOrder = getIntent().getBooleanExtra("isForOrder",false);
+        }
+
+        if (isForOrder==false){
+            currentPage = 0;
+            replaceFragment(new HomeFragment());
+        }else {
+            View view = binding.navView.findViewById(R.id.navigation_orders_history);
+            view.performClick();
+        }
     }
 
     private void replaceFragment(Fragment fragment) {

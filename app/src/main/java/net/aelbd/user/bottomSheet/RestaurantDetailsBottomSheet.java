@@ -1,5 +1,6 @@
 package net.aelbd.user.bottomSheet;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.aelbd.user.R;
+import net.aelbd.user.activity.NewOrderActivity;
 import net.aelbd.user.databinding.BottomSheetRestaurantLayoutBinding;
 
 public class RestaurantDetailsBottomSheet extends BottomSheetDialogFragment {
@@ -31,6 +33,14 @@ public class RestaurantDetailsBottomSheet extends BottomSheetDialogFragment {
             name = "";
             address = "";
         }
+
+        binding.orderNowTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), NewOrderActivity.class));
+                dismiss();
+            }
+        });
 
         return binding.getRoot();
     }

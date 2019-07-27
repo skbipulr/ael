@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".activity.NewOrderActivity">
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorPrimary"
+            android:elevation="3dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/backBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:onClick="backBtn"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:src="@drawable/ic_keyboard_backspace_black_24dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/backBtn"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Order Now"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nameTIL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Product Name">
+
+            <EditText
+                android:id="@+id/productNameET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_medium" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/quantityTIL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Quantity">
+
+            <EditText
+                android:id="@+id/quantityET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_medium" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <CheckBox
+            android:id="@+id/agreeCB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="I agree with cash on delivery"
+            android:textSize="@dimen/text_size_medium" />
+
+
+        <Button
+            android:id="@+id/confirmOrderBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/backgroud_disable"
+            android:enabled="false"
+            android:text="Confirm Order"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium" />
+
+
+    </LinearLayout>
+</layout>
